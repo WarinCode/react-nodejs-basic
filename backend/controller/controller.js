@@ -1,3 +1,14 @@
+class Random {
+  static getId = (length = 3) => {
+    const { random, floor } = Math;
+    const array = [];
+    for(let i = 0; i < length; i++){
+      array.push(floor((random() * 9)));
+    }
+    return parseInt(array.join(""));
+  }
+}
+
 export default class Controller {
   constructor(client) {
     this.client = client;
@@ -27,9 +38,9 @@ export default class Controller {
   //* create
   addData = async (req, res) => {
     const { name, price, isbn } = req.body;
-    this.data = [name, price, isbn];
+    this.data = [name, price, isbn, Random.getId()];
     this.result = await this.client.query(
-      "INSERT INTO tb_book(name, price, isbn) VALUES($1, $2, $3)",
+      "INSERT INTO tb_book(name, price, isbn, id) VALUES($1, $2, $3, $4)",
       this.data
     );
     res.send(this.result);
@@ -51,6 +62,7 @@ export default class Controller {
     this.result = await this.client.query("DELETE FROM tb_book WHERE id = $1", [
       req.params.id,
     ]);
-    res.send(this.result);
+    let isSuccess = this.result.rowCount == 1;
+    res.send(isSuccess);
   };
 }

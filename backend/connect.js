@@ -5,10 +5,10 @@ import { config } from "dotenv";
 config({ path: "./.env" });
 export const { HOST, DATABASE, DATABASE_PORT, USERNAME_, PASSWORD, SERVER_PORT, SERVER_PORT2 } = process.env;
 
-// สร้าง class สืบทอด class จาก Pool เพื่อส่งการตั้งค่าไปให้ super class
+// สร้าง class สืบทอด class จาก Pool เพื่อส่งการตั้งค่าไปให้ superclass
 export default class ConnectDB extends pkg.Pool {
   constructor(config) {
-    super(config); // ส่ง arg ไปให้ super class
+    super(config); // ส่ง arg ไปให้ superclass
   }
 }
 
