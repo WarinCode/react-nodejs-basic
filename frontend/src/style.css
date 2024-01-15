@@ -5,3 +5,7 @@
 nav {
     height: 80px;
 }
+
+table :where(thead, tbody) tr td{
+    cursor: default;
+}

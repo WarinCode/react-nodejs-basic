@@ -27,7 +27,7 @@ app.post(apiRoutes.POST, (req, res) => controller.addData(req, res));
 app.put(apiRoutes.UPDATE, (req, res) => controller.updateData(req, res));
 app.delete(apiRoutes.DELETE, (req, res) => controller.deleteData(req, res));
 
-// set path เส้นทางต่างๆ
+// set path เส้นทางต่างๆในหน้าเว็บ
 const router = new Router(express.Router);
 app.use(router.getRoutes());
 

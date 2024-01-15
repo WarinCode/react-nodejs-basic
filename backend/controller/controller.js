@@ -62,7 +62,7 @@ export default class Controller {
     this.result = await this.client.query("DELETE FROM tb_book WHERE id = $1", [
       req.params.id,
     ]);
-    let isSuccess = this.result.rowCount == 1;
-    res.send(isSuccess);
+    // let isSuccess = this.result.rowCount == 1;
+    res.send(this.result);
   };
 }
