@@ -4,7 +4,7 @@
 <br>
 
 <div align="center">
-    <img src="./image.png" width="100%">
+    <img src="image.png" width="100%">
 </div>
 <br>
 <h1>เรียน course ออนไลน์กับอาจาร์ยกบ</h1>
