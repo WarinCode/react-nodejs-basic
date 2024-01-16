@@ -1,10 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import Book from "./Book";
-import { ModalInputForm, ModalEditForm } from "./ModalForm";
 import Loading from "./Loading";
-
+import { ModalInputForm, ModalEditForm } from "./ModalForm";
 import uuid from "react-uuid";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -18,19 +16,6 @@ const Table = () => {
   const [price, setPrice] = useState(0);
   const [isbn, setIsbn] = useState(0);
   const [id, setId] = useState(0);
-
-  const nameRef = useRef();
-  const priceRef = useRef();
-  const isbnRef = useRef();
-
-  const clearData = () => {
-    setName("");
-    setPrice(0);
-    setIsbn(0);
-    nameRef.current.value = "";
-    priceRef.current.value = "";
-    isbnRef.current.value = "";
-  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -117,7 +102,7 @@ const Table = () => {
           `/db/update/id=${id}&name=${name}&price=${price}&isbn=${isbn}`
         )
       );
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         Swal.fire({
           title: "แก้ไขข้อมูลสำเร็จ",
@@ -167,14 +152,14 @@ const Table = () => {
         <section className="container-fluid">
           <div className="mt-5">
             <header className="text-center fw-bold fs-1">
-              <i class="bi bi-table"></i> ตารางสินค้า
+              <i className="bi bi-table"></i> ตารางสินค้า
             </header>
           </div>
 
           <div className="btn-group my-4">
             <Link to={"/"}>
               <button type="button" className="btn btn-secondary">
-                <i class="bi bi-arrow-left me-1"></i> <span>กลับหน้าหลัก</span>
+                <i className="bi bi-arrow-left me-1"></i> <span>กลับหน้าหลัก</span>
               </button>
             </Link>
 
@@ -182,9 +167,8 @@ const Table = () => {
               className="btn btn-success ms-2 rounded"
               data-bs-toggle="modal"
               data-bs-target="#modalInputForm"
-              onClick={clearData}
             >
-              <i class="bi bi-plus-lg"></i> <span>เพิ่มข้อมูล</span>
+              <i className="bi bi-plus-lg"></i> <span>เพิ่มข้อมูล</span>
             </button>
           </div>
 
@@ -225,9 +209,6 @@ const Table = () => {
         setIsbn={setIsbn}
         saveNewData={saveNewData}
         validateData={validateData}
-        nameRef={nameRef}
-        priceRef={priceRef}
-        isbnRef={isbnRef}
       />
       <ModalEditForm
         name={name}
@@ -239,9 +220,6 @@ const Table = () => {
         setIsbn={setIsbn}
         editProduct={editProduct}
         validateData={validateData}
-        nameRef={nameRef}
-        priceRef={priceRef}
-        isbnRef={isbnRef}
       />
     </>
   );

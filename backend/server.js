@@ -1,6 +1,6 @@
 import express from "express";
-import Router from "./routes/routes.js";
 import getStaticPath from "./dir.js";
+import Router from "./routes/routes.js";
 import Controller from "./controller/controller.js";
 import ConnectDB , { configDB, SERVER_PORT, SERVER_PORT2 } from "./connect.js";
 import cors from "cors"

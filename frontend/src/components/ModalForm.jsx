@@ -1,3 +1,8 @@
+import { useRef } from "react";
+import PropTypes from "prop-types";
+
+const { string, number, func, bool, node, oneOfType } = PropTypes;
+
 const Input = ({ text, type, set, isNumber, value, inputRef }) => (
   <div className="mt-3 mb-1 fs-5">
     <label className="text-uppercase">{text}: </label>
@@ -13,6 +18,26 @@ const Input = ({ text, type, set, isNumber, value, inputRef }) => (
   </div>
 );
 
+// Ref: https://github.com/facebook/prop-types
+Input.prototype = {
+  text: string.isRequired,
+  type: string.isRequired,
+  set: func.isRequired,
+  isNumber: bool.isRequired,
+  value: oneOfType([string.isRequired, number.isRequired]),
+  inputRef: node,
+};
+
+const ModalPropTypes = {
+  name: string.isRequired,
+  price: number.isRequired,
+  isbn: number.isRequired,
+  setName: func.isRequired,
+  setPrice: func.isRequired,
+  setIsbn: func.isRequired,
+  validateData: func.isRequired,
+};
+
 export const ModalInputForm = ({
   name,
   price,
@@ -22,10 +47,20 @@ export const ModalInputForm = ({
   setIsbn,
   saveNewData,
   validateData,
-  nameRef,
-  priceRef,
-  isbnRef
 }) => {
+  const nameRef = useRef(null);
+  const priceRef = useRef(null);
+  const isbnRef = useRef(null);
+
+  const clearData = () => {
+    setName("");
+    setPrice(0);
+    setIsbn(0);
+    nameRef.current.value = "";
+    priceRef.current.value = "";
+    isbnRef.current.value = "";
+  };
+
   return (
     <div className="modal" id="modalInputForm" tabIndex="-1">
       <div className="modal-dialog">
@@ -37,6 +72,7 @@ export const ModalInputForm = ({
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              onClick={clearData}
             ></button>
           </div>
           <div className="modal-body p-4">
@@ -70,6 +106,7 @@ export const ModalInputForm = ({
               type="button"
               className="btn btn-secondary"
               data-bs-dismiss="modal"
+              onClick={clearData}
             >
               ปิด
             </button>
@@ -92,6 +129,11 @@ export const ModalInputForm = ({
   );
 };
 
+ModalInputForm.prototype = {
+  ...ModalPropTypes,
+  saveNewData: func.isRequired
+}
+
 export const ModalEditForm = ({
   name,
   price,
@@ -102,9 +144,6 @@ export const ModalEditForm = ({
   setIsbn,
   editProduct,
   validateData,
-  nameRef,
-  priceRef,
-  isbnRef
 }) => {
   return (
     <div className="modal" id="modalEditForm" tabIndex="-1">
@@ -120,11 +159,11 @@ export const ModalEditForm = ({
             ></button>
           </div>
           <div className="modal-body p-4">
-          <Input
+            <Input
               text={"ชื่อหนังสือ"}
               type={"text"}
               set={setName}
-              inputRef={nameRef}
+              inputRef={undefined}
               isNumber={false}
               value={name}
             />
@@ -132,7 +171,7 @@ export const ModalEditForm = ({
               text={"ราคาสินค้า"}
               type={"number"}
               set={setPrice}
-              inputRef={priceRef}
+              inputRef={undefined}
               isNumber={true}
               value={price}
             />
@@ -140,7 +179,7 @@ export const ModalEditForm = ({
               text={"isbn"}
               type={"number"}
               set={setIsbn}
-              inputRef={isbnRef}
+              inputRef={undefined}
               isNumber={true}
               value={isbn}
             />
@@ -171,3 +210,8 @@ export const ModalEditForm = ({
     </div>
   );
 };
+
+ModalEditForm.prototype = {
+  ...ModalPropTypes,
+  editProduct: func.isRequired
+}

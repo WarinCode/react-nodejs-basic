@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const Book = ({
   id,
@@ -34,18 +34,32 @@ const Book = ({
           data-bs-target="#modalEditForm"
           onClick={getState}
         >
-          <i class="bi bi-pencil-square"></i> <span>แก้ไข</span>
+          <i className="bi bi-pencil-square"></i> <span>แก้ไข</span>
         </button>
         <button
           type="button"
           className="btn btn-danger ms-2"
           onClick={() => deleteProduct(id, name)}
         >
-          <i class="bi bi-trash-fill"></i> <span>ลบ</span>
+          <i className="bi bi-trash-fill"></i> <span>ลบ</span>
         </button>
       </td>
     </tr>
   );
+};
+
+const { string, number, func } = PropTypes;
+Book.prototype = {
+  id: string.isRequired,
+  isbn: number.isRequired,
+  name: string.isRequired,
+  price: number.isRequired,
+  number: number.isRequired,
+  deleteProduct: func.isRequired,
+  setId: func.isRequired,
+  setName: func.isRequired,
+  setPrice: func.isRequired,
+  setIsbn: func.isRequired,
 };
 
 export default Book;
