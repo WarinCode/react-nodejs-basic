@@ -4,6 +4,7 @@ import Router from "./routes/routes.js";
 import Controller from "./controller/controller.js";
 import ConnectDB , { configDB, SERVER_PORT, SERVER_PORT2 } from "./connect.js";
 import cors from "cors"
+import logger from "morgan"
 
 // สร้างการเชื่อมต่อ
 const connect = await new ConnectDB(configDB).connect();
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static(getStaticPath()));
+app.use(logger("dev"))
 
 // จัดการ CURD ของฐานข้อมูล
 app.get(apiRoutes.GET, (req, res) => controller.getData(req, res));
